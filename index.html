@@ -1,89 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Malos Inquilinos</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malos Inquilinos - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="index.js" defer></script>
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-  <div id="login-section" class="section">
-    <h2>Iniciar sesión</h2>
-    <input type="email" id="login-email" placeholder="Correo electrónico">
-    <input type="password" id="login-password" placeholder="Contraseña">
-    <button id="login-btn">Ingresar</button>
-    <p>¿No tienes cuenta? <a href="#" id="show-register">Regístrate aquí</a></p>
+<div class="bg-white shadow p-6 rounded w-full max-w-md">
+  <div id="login-section">
+    <h2 class="text-lg font-semibold mb-2">Login</h2>
+    <input id="login-email" type="email" placeholder="Correo" class="border rounded px-3 py-2 w-full mb-2">
+    <input id="login-password" type="password" placeholder="Contraseña" class="border rounded px-3 py-2 w-full mb-2">
+    <button id="login-btn" class="bg-indigo-700 text-white px-4 py-2 rounded w-full">Ingresar</button>
+    <p class="mt-2 text-sm">¿No tienes cuenta? <a href="#" id="show-register" class="text-blue-600">Regístrate</a></p>
   </div>
 
-  <div id="register-section" class="section hidden">
-    <h2>Registrar usuario</h2>
-    <input type="email" id="register-email" placeholder="Correo electrónico">
-    <input type="password" id="register-password" placeholder="Contraseña">
-    <button id="register-btn">Crear cuenta</button>
-    <p>¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión</a></p>
+  <div id="register-section" class="hidden">
+    <h2 class="text-lg font-semibold mb-2">Registro</h2>
+    <input id="register-email" type="email" placeholder="Correo" class="border rounded px-3 py-2 w-full mb-2">
+    <input id="register-password" type="password" placeholder="Contraseña" class="border rounded px-3 py-2 w-full mb-2">
+    <button id="register-btn" class="bg-green-700 text-white px-4 py-2 rounded w-full">Registrar</button>
+    <p class="mt-2 text-sm">¿Ya tienes cuenta? <a href="#" id="show-login" class="text-blue-600">Iniciar sesión</a></p>
   </div>
+</div>
 
-  <div id="panel-section" class="section hidden">
-    <h2>Base de Datos de Malos Inquilinos</h2>
-    <button id="logout-btn">Cerrar sesión</button>
-
-    <form id="inquilino-form">
-  <h3>Datos del Mal Inquilino</h3>
-  <input id="nombre" type="text" placeholder="Nombre del Mal Inquilino *" required>
-  <input id="apodos" type="text" placeholder="Apodos">
-  <input id="documento" type="text" placeholder="Número de documento de identidad">
-  
-  <label>Tipo de documento:</label>
-  <select id="tipoDoc">
-    <option value="">Seleccione</option>
-    <option>Cédula de Identidad</option>
-    <option>Pasaporte</option>
-    <option>Cédula de Residencia (Extranjero)</option>
-    <option>Cédula Jurídica</option>
-  </select>
-
-  <input id="pais" type="text" placeholder="País (si es extranjero)">
-  <input id="telefono" type="text" placeholder="Teléfono del mal inquilino">
-  <input id="zona" type="text" placeholder="Zona donde alquiló">
-  
-  <textarea id="motivo" placeholder="Motivos del reporte"></textarea>
-  <textarea id="info" placeholder="Información adicional"></textarea>
-  <input id="etiquetas" type="text" placeholder="Etiquetas (ej: moroso, agresivo)">
-  
-  <h3>Representante Legal</h3>
-  <input id="repNombre" type="text" placeholder="Nombre del representante">
-  <input id="repDocumento" type="text" placeholder="Documento del representante">
-  <select id="repTipoDoc">
-    <option value="">Seleccione</option>
-    <option>Cédula de Identidad</option>
-    <option>Pasaporte</option>
-    <option>Cédula de Residencia (Extranjero)</option>
-    <option>Cédula Jurídica</option>
-  </select>
-  <input id="repNacionalidad" type="text" placeholder="Nacionalidad del representante">
-  <input id="repDireccion" type="text" placeholder="Dirección del representante">
-
-  <h3>Redes Sociales</h3>
-  <input id="facebook" type="url" placeholder="URL de Facebook">
-  <input id="instagram" type="url" placeholder="URL de Instagram">
-
-  <h3>Categoría</h3>
-  <select id="categoria">
-    <option>Malos Inquilinos</option>
-  </select>
-
-  <h3>Fotografías o evidencias (URL)</h3>
-  <input id="foto1" type="url" placeholder="URL de foto o evidencia (opcional)">
-  <input id="foto2" type="url" placeholder="Otra URL (opcional)">
-  
-  <button type="submit">Guardar registro</button>
-</form>
-
-<h3>Registros guardados:</h3>
-<ul id="lista-inquilinos"></ul>
-  </div>
-
-  <script type="module" src="app.js"></script>
 </body>
 </html>
