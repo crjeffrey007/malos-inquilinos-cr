@@ -29,15 +29,59 @@
     <button id="logout-btn">Cerrar sesión</button>
 
     <form id="inquilino-form">
-      <input type="text" id="nombre" placeholder="Nombre del mal inquilino" required>
-      <input type="text" id="apodos" placeholder="Apodos">
-      <input type="text" id="documento" placeholder="Número de documento">
-      <textarea id="motivo" placeholder="Motivo del reporte"></textarea>
-      <button type="submit">Guardar</button>
-    </form>
+  <h3>Datos del Mal Inquilino</h3>
+  <input id="nombre" type="text" placeholder="Nombre del Mal Inquilino *" required>
+  <input id="apodos" type="text" placeholder="Apodos">
+  <input id="documento" type="text" placeholder="Número de documento de identidad">
+  
+  <label>Tipo de documento:</label>
+  <select id="tipoDoc">
+    <option value="">Seleccione</option>
+    <option>Cédula de Identidad</option>
+    <option>Pasaporte</option>
+    <option>Cédula de Residencia (Extranjero)</option>
+    <option>Cédula Jurídica</option>
+  </select>
 
-    <h3>Registros guardados:</h3>
-    <ul id="lista-inquilinos"></ul>
+  <input id="pais" type="text" placeholder="País (si es extranjero)">
+  <input id="telefono" type="text" placeholder="Teléfono del mal inquilino">
+  <input id="zona" type="text" placeholder="Zona donde alquiló">
+  
+  <textarea id="motivo" placeholder="Motivos del reporte"></textarea>
+  <textarea id="info" placeholder="Información adicional"></textarea>
+  <input id="etiquetas" type="text" placeholder="Etiquetas (ej: moroso, agresivo)">
+  
+  <h3>Representante Legal</h3>
+  <input id="repNombre" type="text" placeholder="Nombre del representante">
+  <input id="repDocumento" type="text" placeholder="Documento del representante">
+  <select id="repTipoDoc">
+    <option value="">Seleccione</option>
+    <option>Cédula de Identidad</option>
+    <option>Pasaporte</option>
+    <option>Cédula de Residencia (Extranjero)</option>
+    <option>Cédula Jurídica</option>
+  </select>
+  <input id="repNacionalidad" type="text" placeholder="Nacionalidad del representante">
+  <input id="repDireccion" type="text" placeholder="Dirección del representante">
+
+  <h3>Redes Sociales</h3>
+  <input id="facebook" type="url" placeholder="URL de Facebook">
+  <input id="instagram" type="url" placeholder="URL de Instagram">
+
+  <h3>Categoría</h3>
+  <select id="categoria">
+    <option>Malos Inquilinos</option>
+  </select>
+
+  <h3>Fotografías o evidencias (URL)</h3>
+  <input id="foto1" type="url" placeholder="URL de foto o evidencia (opcional)">
+  <input id="foto2" type="url" placeholder="Otra URL (opcional)">
+  
+  <button type="submit">Guardar registro</button>
+</form>
+
+<h3>Registros guardados:</h3>
+<ul id="lista-inquilinos"></ul>
   </div>
 
   <script type="module" src="app.js"></script>
