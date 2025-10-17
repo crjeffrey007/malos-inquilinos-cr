@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Registro - Malos Inquilinos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="app.js" defer></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <header class="bg-indigo-700 text-white py-4 px-6 flex justify-between items-center">
+    <h1 class="text-xl font-semibold">Editar Registro</h1>
+    <div>
+      <a href="panel.html" class="bg-gray-200 text-gray-800 px-3 py-2 rounded hover:bg-gray-300">Volver al Panel</a>
+    </div>
+  </header>
+
+  <main class="p-6 max-w-4xl mx-auto">
+    <form id="editar-form" class="bg-white shadow rounded-lg p-6 flex flex-col gap-4">
+      <h2 class="text-lg font-semibold mb-2">Datos del Mal Inquilino</h2>
+      <input id="nombre" type="text" placeholder="Nombre del Mal Inquilino *" required class="border rounded px-3 py-2">
+      <input id="apodos" type="text" placeholder="Apodos" class="border rounded px-3 py-2">
+      <input id="documento" type="text" placeholder="Número de documento" class="border rounded px-3 py-2">
+      <select id="tipoDoc" class="border rounded px-3 py-2">
+        <option value="">Tipo de documento</option>
+        <option>Cédula de Identidad</option>
+        <option>Pasaporte</option>
+        <option>Cédula de Residencia (Extranjero)</option>
+        <option>Cédula Jurídica</option>
+      </select>
+      <input id="pais" type="text" placeholder="País (si es extranjero)" class="border rounded px-3 py-2">
+      <input id="telefono" type="text" placeholder="Teléfono" class="border rounded px-3 py-2">
+      <input id="zona" type="text" placeholder="Zona donde alquiló" class="border rounded px-3 py-2">
+      <textarea id="motivo" placeholder="Motivos del reporte *" class="border rounded px-3 py-2" required></textarea>
+      <textarea id="info" placeholder="Información adicional" class="border rounded px-3 py-2"></textarea>
+      <input id="etiquetas" type="text" placeholder="Etiquetas separadas por coma" class="border rounded px-3 py-2">
+
+      <h2 class="text-lg font-semibold mt-4">Representante Legal</h2>
+      <input id="repNombre" type="text" placeholder="Nombre del representante" class="border rounded px-3 py-2">
+      <input id="repDocumento" type="text" placeholder="Documento del representante" class="border rounded px-3 py-2">
+      <select id="repTipoDoc" class="border rounded px-3 py-2">
+        <option value="">Tipo de documento</option>
+        <option>Cédula de Identidad</option>
+        <option>Pasaporte</option>
+        <option>Cédula de Residencia (Extranjero)</option>
+        <option>Cédula Jurídica</option>
+      </select>
+      <input id="repNacionalidad" type="text" placeholder="Nacionalidad" class="border rounded px-3 py-2">
+      <input id="repDireccion" type="text" placeholder="Dirección del representante" class="border rounded px-3 py-2">
+
+      <h2 class="text-lg font-semibold mt-4">Redes Sociales</h2>
+      <input id="facebook" type="url" placeholder="Facebook (URL)" class="border rounded px-3 py-2">
+      <input id="instagram" type="url" placeholder="Instagram (URL)" class="border rounded px-3 py-2">
+
+      <h2 class="text-lg font-semibold mt-4">Categoría</h2>
+      <select id="categoria" class="border rounded px-3 py-2">
+        <option>Malos Inquilinos</option>
+      </select>
+
+      <h2 class="text-lg font-semibold mt-4">Evidencias (URLs)</h2>
+      <input id="foto1" type="url" placeholder="URL foto o documento" class="border rounded px-3 py-2">
+      <input id="foto2" type="url" placeholder="URL foto o documento" class="border rounded px-3 py-2">
+
+      <button type="submit" class="bg-indigo-700 text-white px-4 py-2 rounded hover:bg-indigo-800">Guardar Cambios</button>
+    </form>
+  </main>
+
+  <script type="module">
+    import { 
+      initializeApp 
+    } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { 
+      getAuth, onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { 
+      getFirestore, doc, getDoc, updateDoc 
+    } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    // Configuración Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBZlZdNrP4IwgaeDxpGKSBNlSfsP9rsUg8",
+      authDomain: "malos-inquilinos.firebaseapp.com",
+      projectId: "malos-inquilinos",
+      storageBucket: "malos-inquilinos.firebasestorage.app",
+      messagingSenderId: "173364535857",
+      appId: "1:173364535857:web:906e69810e94795ac12b10"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("editar-form");
+
+    // Obtener ID del registro desde la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    if (!id) {
+      alert("ID de registro no proporcionado.");
+      window.location.href = "panel.html";
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      const docRef = doc(db, "inquilinos", id);
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        alert("Registro no encontrado.");
+        window.location.href = "panel.html";
+        return;
+      }
+
+      const data = docSnap.data();
+
+      // Solo el dueño puede editar
+      if (data.usuario !== user.email) {
+        alert("No tienes permiso para editar este registro.");
+        window.location.href = "panel.html";
+        return;
+      }
+
+      // Rellenar formulario
+      form.nombre.value = data.nombre || "";
+      form.apodos.value = data.apodos || "";
+      form.documento.value = data.documento || "";
+      form.tipoDoc.value = data.tipoDoc || "";
+      form.pais.value = data.pais || "";
+      form.telefono.value = data.telefono || "";
+      form.zona.value = data.zona || "";
+      form.motivo.value = data.motivo || "";
+      form.info.value = data.info || "";
+      form.etiquetas.value = data.etiquetas ? data.etiquetas.join(", ") : "";
+
+      form.repNombre.value = data.repNombre || "";
+      form.repDocumento.value = data.repDocumento || "";
+      form.repTipoDoc.value = data.repTipoDoc || "";
+      form.repNacionalidad.value = data.repNacionalidad || "";
+      form.repDireccion.value = data.repDireccion || "";
+
+      form.facebook.value = data.facebook || "";
+      form.instagram.value = data.instagram || "";
+      form.categoria.value = data.categoria || "Malos Inquilinos";
+
+      form.foto1.value = data.fotos && data.fotos[0] ? data.fotos[0] : "";
+      form.foto2.value = data.fotos && data.fotos[1] ? data.fotos[1] : "";
+    });
+
+    // Guardar cambios
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const docRef = doc(db, "inquilinos", id);
+
+      const updatedData = {
+        nombre: form.nombre.value.trim(),
+        apodos: form.apodos.value.trim(),
+        documento: form.documento.value.trim(),
+        tipoDoc: form.tipoDoc.value,
+        pais: form.pais.value.trim(),
+        telefono: form.telefono.value.trim(),
+        zona: form.zona.value.trim(),
+        motivo: form.motivo.value.trim(),
+        info: form.info.value.trim(),
+        etiquetas: form.etiquetas.value.split(",").map(t => t.trim()).filter(t => t !== ""),
+
+        repNombre: form.repNombre.value.trim(),
+        repDocumento: form.repDocumento.value.trim(),
+        repTipoDoc: form.repTipoDoc.value,
+        repNacionalidad: form.repNacionalidad.value.trim(),
+        repDireccion: form.repDireccion.value.trim(),
+
+        facebook: form.facebook.value.trim(),
+        instagram: form.instagram.value.trim(),
+        categoria: form.categoria.value,
+
+        fotos: [
+          form.foto1.value.trim(),
+          form.foto2.value.trim()
+        ].filter(f => f !== ""),
+
+        estado: "pendiente" // vuelve a pendiente al editar
+      };
+
+      try {
+        await updateDoc(docRef, updatedData);
+        alert("✅ Cambios guardados y pendientes de revisión.");
+        window.location.href = "panel.html";
+      } catch (err) {
+        alert("⚠️ Error al guardar: " + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
