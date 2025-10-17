@@ -3,41 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agregar Nuevo Inquilino</title>
+  <title>Agregar Mal Inquilino</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="module" src="app.js" defer></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
-  <header class="bg-indigo-700 text-white py-4 px-6 flex justify-between items-center">
-    <h1 class="text-xl font-semibold">Agregar Nuevo Inquilino</h1>
-    <div>
-      <a href="panel.html" class="bg-gray-200 text-gray-800 px-3 py-2 rounded hover:bg-gray-300">Volver al Panel</a>
-    </div>
-  </header>
 
-  <main class="p-6 max-w-4xl mx-auto">
-    <form id="inquilino-form" class="bg-white shadow rounded-lg p-6 flex flex-col gap-4">
-      <h2 class="text-lg font-semibold">Datos del Mal Inquilino</h2>
-      <input id="nombre" type="text" placeholder="Nombre *" required class="border rounded px-3 py-2">
-      <input id="apodos" type="text" placeholder="Apodos" class="border rounded px-3 py-2">
-      <input id="documento" type="text" placeholder="Número de documento" class="border rounded px-3 py-2">
-      <select id="tipoDoc" class="border rounded px-3 py-2">
-        <option value="">Tipo de documento</option>
-        <option>Cédula</option>
-        <option>Pasaporte</option>
-        <option>Cédula Residencia</option>
-        <option>Cédula Jurídica</option>
-      </select>
-      <input id="telefono" type="text" placeholder="Teléfono" class="border rounded px-3 py-2">
-      <input id="zona" type="text" placeholder="Zona alquilada" class="border rounded px-3 py-2">
-      <textarea id="motivo" placeholder="Motivo *" required class="border rounded px-3 py-2"></textarea>
-      
-      <h2 class="text-lg font-semibold mt-4">Evidencias (Fotos / Videos)</h2>
-      <input id="archivos" type="file" multiple accept="image/*,video/*" class="border rounded px-3 py-2">
-      <ul id="lista-archivos" class="flex flex-wrap gap-2"></ul>
+<header class="bg-indigo-700 text-white py-4 px-6 flex justify-between items-center">
+  <h1 class="text-xl font-semibold">Agregar Nuevo Inquilino</h1>
+  <div>
+    <a href="panel.html" class="bg-gray-200 text-gray-800 px-3 py-2 rounded hover:bg-gray-300">Volver al Panel</a>
+  </div>
+</header>
 
-      <button type="submit" class="bg-indigo-700 text-white px-4 py-2 rounded hover:bg-indigo-800">Guardar Registro</button>
-    </form>
-  </main>
+<main class="p-6 max-w-4xl mx-auto">
+  <form id="inquilino-form" class="bg-white shadow rounded-lg p-6 flex flex-col gap-4">
+    <h2 class="text-lg font-semibold">Datos del Mal Inquilino</h2>
+    <input id="nombre" type="text" placeholder="Nombre *" required class="border rounded px-3 py-2">
+    <input id="apodos" type="text" placeholder="Apodos" class="border rounded px-3 py-2">
+    <input id="documento" type="text" placeholder="Número de documento" class="border rounded px-3 py-2">
+    <select id="tipoDoc" class="border rounded px-3 py-2">
+      <option value="">Tipo de documento</option>
+      <option>Cédula</option>
+      <option>Pasaporte</option>
+      <option>Cédula Residencia</option>
+      <option>Cédula Jurídica</option>
+    </select>
+    <input id="pais" type="text" placeholder="País (si es extranjero)" class="border rounded px-3 py-2">
+    <input id="telefono" type="text" placeholder="Teléfono" class="border rounded px-3 py-2">
+    <input id="zona" type="text" placeholder="Zona alquilada" class="border rounded px-3 py-2">
+    <textarea id="motivo" placeholder="Motivo *" required class="border rounded px-3 py-2"></textarea>
+    <textarea id="info" placeholder="Información adicional" class="border rounded px-3 py-2"></textarea>
+    <input id="etiquetas" type="text" placeholder="Etiquetas (separadas por comas)" class="border rounded px-3 py-2">
+
+    <h2 class="text-lg font-semibold mt-4">Representante Legal</h2>
+    <input id="repNombre" type="text" placeholder="Nombre representante" class="border rounded px-3 py-2">
+    <input id="repDocumento" type="text" placeholder="Documento representante" class="border rounded px-3 py-2">
+    <select id="repTipoDoc" class="border rounded px-3 py-2">
+      <option value="">Tipo de documento</option>
+      <option>Cédula</option>
+      <option>Pasaporte</option>
+      <option>Cédula Residencia</option>
+      <option>Cédula Jurídica</option>
+    </select>
+    <input id="repNacionalidad" type="text" placeholder="Nacionalidad representante" class="border rounded px-3 py-2">
+    <input id="repDireccion" type="text" placeholder="Dirección representante" class="border rounded px-3 py-2">
+
+    <h2 class="text-lg font-semibold mt-4">Redes y Categoría</h2>
+    <input id="facebook" type="text" placeholder="Facebook URL" class="border rounded px-3 py-2">
+    <input id="instagram" type="text" placeholder="Instagram URL" class="border rounded px-3 py-2">
+    <select id="categoria" class="border rounded px-3 py-2">
+      <option value="Malos Inquilinos">Malos Inquilinos</option>
+    </select>
+
+    <h2 class="text-lg font-semibold mt-4">Evidencias (Fotos / Videos)</h2>
+    <input id="archivos" type="file" multiple accept="image/*,video/*" class="border rounded px-3 py-2">
+    <ul id="lista-archivos" class="flex flex-wrap gap-2"></ul>
+
+    <button type="submit" class="bg-indigo-700 text-white px-4 py-2 rounded hover:bg-indigo-800">Guardar Registro</button>
+  </form>
+</main>
+
 </body>
 </html>
