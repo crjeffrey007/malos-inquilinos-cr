@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Control - Malos Inquilinos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="app.js" defer></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <header class="bg-indigo-700 text-white py-4 px-6 flex justify-between items-center">
+    <h1 class="text-xl font-semibold">Panel de Control - Malos Inquilinos</h1>
+    <div class="flex items-center gap-4">
+      <a href="agregar.html" class="bg-green-500 px-3 py-2 rounded hover:bg-green-600">+ Nuevo Reporte</a>
+      <button id="logout-btn" class="bg-red-500 px-3 py-2 rounded hover:bg-red-600">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main class="p-6">
+    <h2 class="text-2xl font-semibold mb-4">Reportes registrados</h2>
+    <ul id="lista-inquilinos" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></ul>
+  </main>
+
+  <footer class="text-center text-sm text-gray-500 py-4">
+    © 2025 Malos Inquilinos - Sistema interno
+  </footer>
+
+  <script type="module">
+    import { 
+      initializeApp 
+    } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { 
+      getAuth, onAuthStateChanged, signOut 
+    } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { 
+      getFirestore, collection, getDocs, doc, updateDoc 
+    } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    // Configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBZlZdNrP4IwgaeDxpGKSBNlSfsP9rsUg8",
+      authDomain: "malos-inquilinos.firebaseapp.com",
+      projectId: "malos-inquilinos",
+      storageBucket: "malos-inquilinos.firebasestorage.app",
+      messagingSenderId: "173364535857",
+      appId: "1:173364535857:web:906e69810e94795ac12b10"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const lista = document.getElementById("lista-inquilinos");
+    const logoutBtn = document.getElementById("logout-btn");
+    const ADMIN_EMAIL = "crjeffrey7@gmail.com";
+
+    logoutBtn.addEventListener("click", () => signOut(auth));
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+        return;
+      }
+      cargarInquilinos(user);
+    });
+
+    async function cargarInquilinos(user) {
+      lista.innerHTML = "<p class='col-span-full text-center text-gray-500'>Cargando registros...</p>";
+
+      const querySnapshot = await getDocs(collection(db, "inquilinos"));
+      lista.innerHTML = "";
+
+      if (querySnapshot.empty) {
+        lista.innerHTML = "<p class='col-span-full text-center text-gray-400'>No hay registros todavía.</p>";
+        return;
+      }
+
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        const id = docSnap.id;
+
+        // Card base
+        const card = document.createElement("li");
+        card.className = "bg-white rounded-xl shadow p-4 flex flex-col gap-3";
+
+        // Imagen o marcador
+        const foto = data.fotos && data.fotos.length > 0 ? data.fotos[0] : "https://via.placeholder.com/300x200?text=Sin+Foto";
+        card.innerHTML = `
+          <img src="${foto}" alt="foto inquilino" class="rounded-lg object-cover w-full h-48">
+          <div>
+            <h3 class="text-lg font-semibold">${data.nombre}</h3>
+            <p class="text-sm text-gray-600">${data.motivo}</p>
+            <p class="text-xs mt-1 text-gray-500">Por: ${data.usuario || "Desconocido"}</p>
+            <span class="inline-block mt-2 px-2 py-1 text-xs rounded ${
+              data.estado === "aprobado" 
+                ? "bg-green-100 text-green-700" 
+                : "bg-yellow-100 text-yellow-700"
+            }">${data.estado || "pendiente"}</span>
+          </div>
+        `;
+
+        const acciones = document.createElement("div");
+        acciones.className = "flex gap-2 mt-3";
+
+        // Botón editar (solo si es el dueño)
+        if (data.usuario === user.email) {
+          const btnEditar = document.createElement("a");
+          btnEditar.href = `editar.html?id=${id}`;
+          btnEditar.textContent = "Editar";
+          btnEditar.className = "bg-blue-500 text-white text-sm px-3 py-1 rounded hover:bg-blue-600";
+          acciones.appendChild(btnEditar);
+        }
+
+        // Botones admin
+        if (user.email === ADMIN_EMAIL) {
+          const btnAprobar = document.createElement("button");
+          btnAprobar.textContent = "Aprobar";
+          btnAprobar.className = "bg-green-500 text-white text-sm px-3 py-1 rounded hover:bg-green-600";
+          btnAprobar.onclick = async () => {
+            await updateDoc(doc(db, "inquilinos", id), { estado: "aprobado" });
+            cargarInquilinos(user);
+          };
+
+          const btnRechazar = document.createElement("button");
+          btnRechazar.textContent = "Rechazar";
+          btnRechazar.className = "bg-red-500 text-white text-sm px-3 py-1 rounded hover:bg-red-600";
+          btnRechazar.onclick = async () => {
+            await updateDoc(doc(db, "inquilinos", id), { estado: "rechazado" });
+            cargarInquilinos(user);
+          };
+
+          acciones.appendChild(btnAprobar);
+          acciones.appendChild(btnRechazar);
+        }
+
+        card.appendChild(acciones);
+        lista.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
