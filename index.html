@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Base Privada de Malos Inquilinos</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header>
+    <h1>🔒 Base Privada de Malos Inquilinos</h1>
+  </header>
+
+  <!-- LOGIN / REGISTRO -->
+  <section id="auth-section">
+    <h2>Acceso de usuarios</h2>
+    <input type="email" id="email" placeholder="Correo electrónico" />
+    <input type="password" id="password" placeholder="Contraseña" />
+    <div>
+      <button id="loginBtn">Entrar</button>
+      <button id="registerBtn">Registrarse</button>
+    </div>
+    <p id="auth-msg"></p>
+  </section>
+
+  <!-- PANEL PRIVADO -->
+  <section id="panel-section" style="display:none;">
+    <button id="logoutBtn">Cerrar sesión</button>
+
+    <h2>Registrar Mal Inquilino</h2>
+    <form id="inquilinoForm">
+      <label>Nombre del Mal Inquilino *</label>
+      <input id="nombre" required />
+
+      <label>Apodos</label>
+      <input id="apodos" />
+
+      <label>Número de documento</label>
+      <input id="documento" />
+
+      <label>Tipo de documento</label>
+      <select id="tipoDocumento">
+        <option>Cédula de Identidad</option>
+        <option>Pasaporte</option>
+        <option>Cédula de Residencia (Extranjero)</option>
+        <option>Cédula Jurídica</option>
+      </select>
+
+      <label>País (si extranjero)</label>
+      <input id="pais" />
+
+      <label>URL de fotografías</label>
+      <textarea id="fotos" placeholder="Pega enlaces de imágenes (Imgur, etc.)"></textarea>
+
+      <label>Teléfono</label>
+      <input id="telefono" />
+
+      <label>Zona donde alquiló</label>
+      <input id="zona" />
+
+      <label>Motivos del reporte</label>
+      <textarea id="motivos"></textarea>
+
+      <label>Enlaces de evidencias o documentos</label>
+      <textarea id="evidencia" placeholder="Pega enlaces públicos"></textarea>
+
+      <label>Información adicional</label>
+      <textarea id="infoAdicional"></textarea>
+
+      <label>Etiquetas (separadas por coma)</label>
+      <input id="etiquetas" />
+
+      <h3>Representante Legal</h3>
+      <label>Nombre</label>
+      <input id="representante" />
+      <label>Documento</label>
+      <input id="docRepresentante" />
+      <label>Tipo documento</label>
+      <select id="tipoDocRepresentante">
+        <option>Cédula de Identidad</option>
+        <option>Pasaporte</option>
+        <option>Cédula de Residencia (Extranjero)</option>
+        <option>Cédula Jurídica</option>
+      </select>
+      <label>Nacionalidad</label>
+      <input id="nacionalidad" />
+      <label>Dirección</label>
+      <input id="direccion" />
+      <label>Facebook</label>
+      <input id="facebook" />
+      <label>Instagram</label>
+      <input id="instagram" />
+
+      <button type="submit">Guardar Reporte</button>
+    </form>
+
+    <h2>📋 Reportes guardados</h2>
+    <div id="listaInquilinos"></div>
+  </section>
+</body>
+</html>
