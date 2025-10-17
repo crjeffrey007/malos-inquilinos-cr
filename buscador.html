@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar Malos Inquilinos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="buscador.js" defer></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<header class="bg-indigo-700 text-white py-4 px-6 flex justify-between items-center">
+  <h1 class="text-xl font-semibold">Buscador de Malos Inquilinos</h1>
+  <button id="logout-btn" class="bg-gray-200 text-gray-800 px-3 py-2 rounded hover:bg-gray-300">Cerrar Sesión</button>
+</header>
+
+<main class="p-6 max-w-5xl mx-auto">
+  <input id="buscador" type="text" placeholder="Buscar por nombre..." class="border rounded px-3 py-2 w-full mb-6">
+  <div id="resultados" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+</main>
+
+</body>
+</html>
