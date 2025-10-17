@@ -17,49 +17,24 @@
 
   <main class="p-6 max-w-4xl mx-auto">
     <form id="inquilino-form" class="bg-white shadow rounded-lg p-6 flex flex-col gap-4">
-      <h2 class="text-lg font-semibold mb-2">Datos del Mal Inquilino</h2>
-      <input id="nombre" type="text" placeholder="Nombre del Mal Inquilino *" required class="border rounded px-3 py-2">
+      <h2 class="text-lg font-semibold">Datos del Mal Inquilino</h2>
+      <input id="nombre" type="text" placeholder="Nombre *" required class="border rounded px-3 py-2">
       <input id="apodos" type="text" placeholder="Apodos" class="border rounded px-3 py-2">
       <input id="documento" type="text" placeholder="Número de documento" class="border rounded px-3 py-2">
       <select id="tipoDoc" class="border rounded px-3 py-2">
         <option value="">Tipo de documento</option>
-        <option>Cédula de Identidad</option>
+        <option>Cédula</option>
         <option>Pasaporte</option>
-        <option>Cédula de Residencia (Extranjero)</option>
+        <option>Cédula Residencia</option>
         <option>Cédula Jurídica</option>
       </select>
-      <input id="pais" type="text" placeholder="País (si es extranjero)" class="border rounded px-3 py-2">
       <input id="telefono" type="text" placeholder="Teléfono" class="border rounded px-3 py-2">
-      <input id="zona" type="text" placeholder="Zona donde alquiló" class="border rounded px-3 py-2">
-      <textarea id="motivo" placeholder="Motivos del reporte *" class="border rounded px-3 py-2" required></textarea>
-      <textarea id="info" placeholder="Información adicional" class="border rounded px-3 py-2"></textarea>
-      <input id="etiquetas" type="text" placeholder="Etiquetas separadas por coma" class="border rounded px-3 py-2">
-
-      <h2 class="text-lg font-semibold mt-4">Representante Legal</h2>
-      <input id="repNombre" type="text" placeholder="Nombre del representante" class="border rounded px-3 py-2">
-      <input id="repDocumento" type="text" placeholder="Documento del representante" class="border rounded px-3 py-2">
-      <select id="repTipoDoc" class="border rounded px-3 py-2">
-        <option value="">Tipo de documento</option>
-        <option>Cédula de Identidad</option>
-        <option>Pasaporte</option>
-        <option>Cédula de Residencia (Extranjero)</option>
-        <option>Cédula Jurídica</option>
-      </select>
-      <input id="repNacionalidad" type="text" placeholder="Nacionalidad" class="border rounded px-3 py-2">
-      <input id="repDireccion" type="text" placeholder="Dirección del representante" class="border rounded px-3 py-2">
-
-      <h2 class="text-lg font-semibold mt-4">Redes Sociales</h2>
-      <input id="facebook" type="url" placeholder="Facebook (URL)" class="border rounded px-3 py-2">
-      <input id="instagram" type="url" placeholder="Instagram (URL)" class="border rounded px-3 py-2">
-
-      <h2 class="text-lg font-semibold mt-4">Categoría</h2>
-      <select id="categoria" class="border rounded px-3 py-2">
-        <option>Malos Inquilinos</option>
-      </select>
-
-      <h2 class="text-lg font-semibold mt-4">Evidencias (URLs)</h2>
-      <input id="foto1" type="url" placeholder="URL foto o documento" class="border rounded px-3 py-2">
-      <input id="foto2" type="url" placeholder="URL foto o documento" class="border rounded px-3 py-2">
+      <input id="zona" type="text" placeholder="Zona alquilada" class="border rounded px-3 py-2">
+      <textarea id="motivo" placeholder="Motivo *" required class="border rounded px-3 py-2"></textarea>
+      
+      <h2 class="text-lg font-semibold mt-4">Evidencias (Fotos / Videos)</h2>
+      <input id="archivos" type="file" multiple accept="image/*,video/*" class="border rounded px-3 py-2">
+      <ul id="lista-archivos" class="flex flex-wrap gap-2"></ul>
 
       <button type="submit" class="bg-indigo-700 text-white px-4 py-2 rounded hover:bg-indigo-800">Guardar Registro</button>
     </form>
