@@ -42,7 +42,7 @@ inputArchivos.addEventListener("change", () => {
 async function subirArchivoCloudinary(file) {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", UPLOAD_PRESET);
+  formData.append("malos-inquilinos", UPLOAD_PRESET);
   const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, {
     method: "POST",
     body: formData
