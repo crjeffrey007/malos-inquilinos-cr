@@ -17,7 +17,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // Cloudinary
-const CLOUD_NAME = "malos-inquilinos";
+const CLOUD_NAME = "media-anuncios";
 const UPLOAD_PRESET = "malos-inquilinos"; // tu preset unsigned
 
 // Formspree
